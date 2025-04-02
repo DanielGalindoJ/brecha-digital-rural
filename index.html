@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brecha Digital Rural - Universidad ECCI - Tecnologia y Sociedad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Variables ECCI */
+        :root {
+            --ecci-green: #006837;
+            --ecci-blue: #003366;
+            --ecci-gold: #FFD700;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #6c757d;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        /* Header ECCI */
+        .header-ecci {
+            background: var(--ecci-blue);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .header-ecci h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .author-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--ecci-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--ecci-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Secciones */
+        .section {
+            padding: 4rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--ecci-blue);
+            position: relative;
+            font-size: 2rem;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--ecci-green);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border-top: 4px solid var(--ecci-green);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--ecci-blue);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--ecci-blue);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--ecci-green);
+            margin-top: 1rem;
+            border-radius: 3px;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin: 3rem 0;
+        }
+
+        .timeline {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            min-width: 800px;
+        }
+
+        .timeline-item {
+            min-width: 280px;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--ecci-green);
+        }
+
+        .timeline-item h3 {
+            color: var(--ecci-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+        }
+
+        .timeline-item li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-item i {
+            color: var(--ecci-green);
+        }
+
+        /* Preguntas y Respuestas */
+        .qa-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .qa-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--ecci-blue);
+        }
+
+        .qa-card h3 {
+            padding: 1.5rem;
+            background: rgba(0, 104, 55, 0.05);
+            color: var(--ecci-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .qa-card h3:hover {
+            background: rgba(0, 104, 55, 0.1);
+        }
+
+        .qa-card h3 i {
+            font-size: 1.2rem;
+        }
+
+        .answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease-out;
+        }
+
+        .qa-card.active .answer {
+            padding: 1.5rem;
+            max-height: 500px;
+            border-top: 1px solid #eee;
+        }
+
+        .answer ul,
+        .answer ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gráfico */
+        .chart-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Footer */
+        .footer-ecci {
+            background: var(--ecci-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-ecci img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-ecci p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-ecci {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header ECCI -->
+    <header class="header-ecci">
+        <div class="logo-container">
+            <img src="https://www.acofi.edu.co/eiei2018/wp-content/uploads/2018/07/Logo-Universidad-ECCI.jpg"
+                alt="Universidad ECCI" class="logo">
+            <h1> Brecha Digital Rural - Tecnologia y Sociedad</h1>
+        </div>
+        <div class="author-info">
+            <i class="fas fa-user"></i> Autor: <strong>[Cristian Daniel Galindo Jimenez]</strong> |
+            <i class="fas fa-id-card"></i> Código: <strong>[143238]</strong>
+            <i class="fas fa-id-card"></i> Estudiando: <strong>[Desarrollo Informatico]</strong>
+
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Tecnología y Desarrollo Rural</h2>
+            <p>Infografía interactiva sobre desigualdad de acceso y alfabetización digital en comunidades rurales</p>
+            <a href="#problemas" class="btn">Explorar Infografía</a>
+        </div>
+    </section>
+
+    <!-- Sección 1: Problemas Clave -->
+    <section id="problemas" class="section">
+        <h2 class="section-title">Desigualdades en Comunidades Rurales</h2>
+        <div class="card-container">
+            <div class="card">
+                <i class="fas fa-wifi-slash"></i>
+                <h3>Brecha de Acceso</h3>
+                <p>37% de zonas rurales sin acceso a internet de calidad (UIT, 2023)</p>
+                <div class="progress-bar" style="width: 37%"></div>
+            </div>
+            <div class="card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Analfabetismo Digital</h3>
+                <p>65% no sabe identificar información confiable en línea</p>
+                <div class="progress-bar" style="width: 65%"></div>
+            </div>
+            <div class="card">
+                <i class="fas fa-book"></i>
+                <h3>Exclusión Educativa</h3>
+                <p>80% de escuelas rurales sin plataformas digitales</p>
+                <div class="progress-bar" style="width: 80%"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 2: Ciclo de Vida Tecnológico -->
+    <section id="ciclo-vida" class="section" style="background: rgba(0,104,55,0.05);">
+        <h2 class="section-title">Ciclo de Vida Tecnológico en Zonas Rurales</h2>
+        <div class="timeline-container">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Introducción</h3>
+                    <p><strong>Ejemplo:</strong> Tabletas agrícolas</p>
+                    <ul>
+                        <li><i class="fas fa-users"></i> <strong>Social:</strong> Resistencia cultural inicial</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Económico:</strong> Alto costo de implementación
+                        </li>
+                        <li><i class="fas fa-monument"></i> <strong>Cultural:</strong> Desconfianza en tecnologías
+                            externas</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>2. Crecimiento</h3>
+                    <p><strong>Ejemplo:</strong> Apps de pronóstico climático</p>
+                    <ul>
+                        <li><i class="fas fa-users"></i> <strong>Social:</strong> Nuevas dinámicas comunitarias</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Económico:</strong> +20% en productividad agrícola
+                        </li>
+                        <li><i class="fas fa-monument"></i> <strong>Cultural:</strong> Integración con saberes
+                            tradicionales</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>3. Madurez</h3>
+                    <p><strong>Ejemplo:</strong> Comercio electrónico local</p>
+                    <ul>
+                        <li><i class="fas fa-users"></i> <strong>Social:</strong> Reducción de migración juvenil</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Económico:</strong> Nuevos modelos de negocio</li>
+                        <li><i class="fas fa-monument"></i> <strong>Cultural:</strong> Globalización de productos
+                            artesanales</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h3>4. Obsolescencia</h3>
+                    <p><strong>Ejemplo:</strong> Equipos donados desactualizados</p>
+                    <ul>
+                        <li><i class="fas fa-users"></i> <strong>Social:</strong> Exclusión de adultos mayores</li>
+                        <li><i class="fas fa-chart-line"></i> <strong>Económico:</strong> Costos de mantenimiento</li>
+                        <li><i class="fas fa-monument"></i> <strong>Cultural:</strong> Pérdida de autonomía tecnológica
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 3: Gráfico de Impacto -->
+    <section class="section">
+        <h2 class="section-title">Impacto Multidimensional</h2>
+        <div class="chart-container">
+            <canvas id="impactChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Sección 4: Preguntas Clave -->
+    <section id="preguntas" class="section">
+        <h2 class="section-title">Preguntas Clave como Consultor Tecnológico</h2>
+        <div class="qa-container">
+            <!-- Pregunta 1 -->
+            <div class="qa-card">
+                <h3><i class="fas fa-question-circle"></i> ¿Cómo afecta la introducción de tecnología a la economía
+                    rural?</h3>
+                <div class="answer">
+                    <p><strong>Impacto económico:</strong></p>
+                    <ul>
+                        <li><strong>Oportunidades:</strong> Creación de empleos técnicos locales, acceso a mercados
+                            globales, reducción de costos con agricultura de precisión.</li>
+                        <li><strong>Riesgos:</strong> Dependencia de monopolios tecnológicos, aumento de desigualdades
+                            si no hay acceso universal.</li>
+                    </ul>
+                    <p><strong>Caso práctico:</strong> En Perú, la app "AgroTech" aumentó ingresos de pequeños
+                        agricultores en 35% al conectarles directamente con compradores.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="qa-card">
+                <h3><i class="fas fa-question-circle"></i> ¿Qué hacer frente a la obsolescencia tecnológica?</h3>
+                <div class="answer">
+                    <p><strong>Soluciones sostenibles:</strong></p>
+                    <ol>
+                        <li><strong>Centros de reparación comunitaria:</strong> Capacitar técnicos locales para
+                            mantenimiento.</li>
+                        <li><strong>Actualización escalonada:</strong> Planificar ciclos de renovación acordes a
+                            necesidades reales.</li>
+                        <li><strong>Donaciones éticas:</strong> No enviar equipos obsoletos, sino tecnologías con
+                            soporte garantizado.</li>
+                    </ol>
+                    <p><strong>Ejemplo:</strong> El programa "TecnoRural" en Colombia reacondiciona computadoras donadas
+                        con software educativo offline.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="qa-card">
+                <h3><i class="fas fa-question-circle"></i> ¿Cómo abordar las implicaciones éticas?</h3>
+                <div class="answer">
+                    <p><strong>Principios clave:</strong></p>
+                    <ul>
+                        <li><strong>Autonomía:</strong> Las comunidades deben decidir qué tecnologías adoptar.</li>
+                        <li><strong>Sostenibilidad:</strong> Evitar soluciones cortoplacistas.</li>
+                        <li><strong>Inclusión:</strong> Diseñar para todas las edades y niveles de alfabetización.</li>
+                    </ul>
+                    <p><strong>Herramienta:</strong> Matriz de evaluación ética con criterios sociales, culturales y
+                        ambientales.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="qa-card">
+                <h3><i class="fas fa-question-circle"></i> ¿Cómo mejorar la alfabetización digital?</h3>
+                <div class="answer">
+                    <p><strong>Estrategias comprobadas:</strong></p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p><strong><i class="fas fa-chalkboard-teacher"></i> Talleres prácticos:</strong></p>
+                            <ul>
+                                <li>Usar lenguaje cotidiano</li>
+                                <li>Enfocarse en necesidades inmediatas</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong><i class="fas fa-hands-helping"></i> Mentorías:</strong></p>
+                            <ul>
+                                <li>Jóvenes enseñan a adultos</li>
+                                <li>Aprendizaje entre pares</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer ECCI -->
+    <footer class="footer-ecci">
+        <img src="https://www.acofi.edu.co/eiei2018/wp-content/uploads/2018/07/Logo-Universidad-ECCI.jpg"
+            alt="Logo ECCI">
+        <p>Universidad ECCI - Facultad de Ingeniería</p>
+        <p>Bogotá, Colombia | 2025</p>
+    </footer>
+
+    <script>
+        // Interactividad para preguntas
+        document.querySelectorAll('.qa-card h3').forEach(question => {
+            question.addEventListener('click', () => {
+                question.parentElement.classList.toggle('active');
+            });
+        });
+
+        // Gráfico de Impacto
+        const ctx = document.getElementById('impactChart');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Educación', 'Empleo', 'Productividad', 'Conectividad', 'Cultura', 'Salud'],
+                datasets: [
+                    {
+                        label: 'Impacto Positivo',
+                        data: [85, 70, 80, 60, 65, 75],
+                        backgroundColor: 'rgba(0, 104, 55, 0.2)',
+                        borderColor: '#006837',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#006837'
+                    },
+                    {
+                        label: 'Desafíos Pendientes',
+                        data: [40, 35, 25, 65, 30, 45],
+                        backgroundColor: 'rgba(0, 51, 102, 0.2)',
+                        borderColor: '#003366',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#003366'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: { stepSize: 20 }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
